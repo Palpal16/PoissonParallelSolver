@@ -1,3 +1,6 @@
+#ifndef READJSON_HPP
+#define READJSON_HPP
+
 #include <string>
 #include <functional>
 
@@ -10,3 +13,5 @@ void readDataJson(const std::string & filename, std::size_t &N, double &tol, std
 std::function<double(double, double)> readExactJson(const std::string & filename);
 bool readIfPrintJson(const std::string & filename);
 bool readIfSeqJson(const std::string & filename);
+
+#endif // READJSON_HPP
