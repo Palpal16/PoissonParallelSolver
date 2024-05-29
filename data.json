@@ -7,6 +7,6 @@
     "homogeneousDirichlet" : false,
     "boundaryValue" : 0.0,
     "boundaryFunction" : "0 * x * y",
-    "printSolution" : true,
+    "printSolution" : false,
     "solveSequential" : true
 }

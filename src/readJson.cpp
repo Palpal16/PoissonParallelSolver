@@ -39,11 +39,18 @@ std::function<double(double, double)> readExactJson(const std::string & filename
 	return ExactSol;
 }
 
+int readDimJson(const std::string & filename){
+	std::ifstream f(filename);
+	json data = json::parse(f);
+
+	int dim = data.value("GridDimension",10);
+	return dim;
+}
+
 bool readIfPrintJson(const std::string & filename){
 	std::ifstream f(filename);
 	json data = json::parse(f);
 
-	// Read the dimesion of the grid
 	bool print = data.value("printSolution",true);
 	return print;
 }
@@ -52,7 +59,6 @@ bool readIfSeqJson(const std::string & filename){
 	std::ifstream f(filename);
 	json data = json::parse(f);
 
-	// Read the dimesion of the grid
 	bool seq = data.value("solveSequential",true);
 	return seq;
 }

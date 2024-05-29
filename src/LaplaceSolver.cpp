@@ -14,13 +14,6 @@ void sequentialSolver(std::string filename){
     approxSolution u(filename);
     std::function<double(double, double)> u_ex = readExactJson(filename);
 
-    if(readIfPrintJson(filename)){
-        std::cout << " ------------ Print of exact solution ------------ "<< std::endl;
-        std::cout << "Exact solution: " << std::endl;
-        printExact(u_ex, u.getGridSize());
-        std::cout << std::endl;
-    }
-
     auto start = std::chrono::high_resolution_clock::now();
     std::size_t iter = u.solve();
     auto end = std::chrono::high_resolution_clock::now();
