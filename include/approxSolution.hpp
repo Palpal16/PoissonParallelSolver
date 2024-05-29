@@ -19,7 +19,7 @@ class approxSolution{
 
 public:
 	// Constructor that reads the data from a json file
-	approxSolution(std::string filename);
+	approxSolution(std::string filename, std::size_t N=0);
 	//Constructor that takes only the rows chosen, from the passed data and force matirx, needed for the scatter for parallelizatoin
 	approxSolution(std::vector<double> Data, std::vector<double> Force, std::size_t nCols, double tolerance, std::size_t iter): nCols(nCols), h(1.0/(nCols-1)), data(Data), force(Force), tol(tolerance), maxIter(iter){};
 	// Copy constructor
@@ -45,7 +45,6 @@ public:
 	std::size_t solve();
 	// Returns the error from the previous iteration
 	double iterate();
-
 	void print();
 };
 

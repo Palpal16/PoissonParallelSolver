@@ -1,5 +1,6 @@
 #include <mpi.h>
 #include <omp.h>
+#include <vector>
 
 #include "LaplaceSolver.hpp"
 #include "readJson.hpp"
@@ -29,6 +30,18 @@ int main(int argc, char** argv) {
 
     if(readIfMpiJson(filename)){
         parallelSolver(filename);
+    }
+
+    if(readIfPerformanceJson(filename)){
+        std::vector<int> gridSizes;
+        std::vector<std::vector<double>> times = parallelPerformance(filename, gridSizes);
+        if(rank==0){
+            std::cout << "\n ------------ Scalability test ------------ "<< std::endl;
+            std::cout << "Grid size, Seq time, Par time" << std::endl;
+            for(std::size_t i=0; i<gridSizes.size(); i++){
+                std::cout << gridSizes[i] << ", " << times[0][i] << ", " << times[1][i] << std::endl;
+            }
+        }
     }
 
     MPI_Finalize();

@@ -1,13 +1,15 @@
 #include "approxSolution.hpp"
 #include <omp.h>
 
-approxSolution::approxSolution(std::string filename){
+approxSolution::approxSolution(std::string filename, std::size_t N){
     std::function<double(double, double)> forcingTerm;
     bool Dir;
     double boundaryValue;
     std::function<double(double, double)> boundaryFunction;
     // Read the data from the json file
     readDataJson(filename, nCols, tol, maxIter, forcingTerm, Dir, boundaryValue, boundaryFunction);
+    if(N!=0) // Needed for the porformance test, so we can increase the grid size from the initial one
+        nCols = N;
     h = 1.0 / (nCols - 1);
 
     // Set all elements to 0

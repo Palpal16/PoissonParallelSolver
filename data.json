@@ -1,7 +1,7 @@
 {
-    "GridDimension" : 256,
+    "GridDimension" : 16,
     "tolerance" : 1e-4,
-    "maxIterations" : 100000,
+    "maxIterations" : 10000,
     "forceFunction" : "8 * pi * pi * sin(2 * pi * x) * sin(2 * pi * y)",
     "exactSolution" : "sin(2 * pi * x) * sin(2 * pi * y)",
     "homogeneousDirichlet" : false,
@@ -10,4 +10,5 @@
     "printSolution" : false,
     "solveSequential" : false,
     "solveParallel" : false,
+    "performanceTest" : true
 }

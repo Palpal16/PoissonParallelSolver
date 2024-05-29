@@ -9,9 +9,9 @@
 #include "readJson.hpp"
 
 
-void sequentialSolver(std::string filename){
+double sequentialSolver(std::string filename, std::size_t N){
 
-    approxSolution u(filename);
+    approxSolution u(filename, N);
     std::function<double(double, double)> u_ex = readExactJson(filename);
 
     auto start = std::chrono::high_resolution_clock::now();
@@ -29,10 +29,11 @@ void sequentialSolver(std::string filename){
         u.print();
     }
     std::cout << std::endl;
+    return diff.count();
 }
 
 
-void parallelSolver(std::string filename){
+double parallelSolver(std::string filename, std::size_t N){
 
     int rank, size;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -46,7 +47,7 @@ void parallelSolver(std::string filename){
     std::vector<double> force;
 
     if(rank==0){
-        approxSolution u(filename);
+        approxSolution u(filename, N);
         GridDimensions = u.getGridSize();
         tolerance = u.getTolerance();
         maxIter = u.getMaxIter();
@@ -149,7 +150,57 @@ void parallelSolver(std::string filename){
             std::cout << "\nParallel approximate solution: " << std::endl;
             u.print();
         }
+        return diff.count();
     }
+    return 0.0;
 
 }
 
+
+std::vector<std::vector<double>> parallelPerformance(std::string filename, std::vector<int> &gridSizes){
+    int rank, size;
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+    int MaxGridSize = 300;
+    bool finished=false;
+    std::vector<std::vector<double>> Times(2, std::vector<double>());
+    
+    for (int i=0; ; i++){
+        if(rank==0){
+            if(i==0){            
+                gridSizes.push_back(readDimJson(filename));
+            }else if(gridSizes[i-1]*2 <= MaxGridSize){
+                gridSizes.push_back(gridSizes[i-1]*2);
+            }
+            else{
+                finished = true;
+            }
+            if(!finished){
+                std::cout << "\n********************************************" << std::endl;
+                std::cout << "Performance iteration "<< i << " with grid size " << gridSizes[i] << std::endl;
+                std::cout << "********************************************" << std::endl;
+                Times[0].push_back(sequentialSolver(filename, gridSizes[i]));
+            }
+        }
+        // Broadcast the bool finished to all processes
+        MPI_Bcast(&finished, 1, MPI_C_BOOL, 0, MPI_COMM_WORLD);
+        MPI_Barrier(MPI_COMM_WORLD);
+        if(finished){
+            break;
+        }
+
+        //Broadcast the grid size of this iteration to all processes
+        int N;
+        if(rank==0){
+            N = gridSizes[i];
+        }
+        MPI_Bcast(&N, 1, MPI_INT, 0, MPI_COMM_WORLD);
+        
+        double mom_time = parallelSolver(filename, N);
+        if(rank==0){
+            Times[1].push_back(mom_time);
+        }
+    }
+    return Times;
+}

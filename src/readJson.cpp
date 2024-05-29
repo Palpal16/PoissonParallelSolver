@@ -70,3 +70,11 @@ bool readIfMpiJson(const std::string & filename){
 	bool mpi = data.value("solveParallel",true);
 	return mpi;
 }
+
+bool readIfPerformanceJson(const std::string & filename){
+	std::ifstream f(filename);
+	json data = json::parse(f);
+
+	bool scal = data.value("scalabilityTest",true);
+	return scal;
+}
