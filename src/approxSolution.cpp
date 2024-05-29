@@ -1,4 +1,5 @@
 #include "approxSolution.hpp"
+#include <omp.h>
 
 approxSolution::approxSolution(std::string filename){
     std::function<double(double, double)> forcingTerm;
@@ -60,17 +61,15 @@ std::size_t approxSolution::solve(){
 double approxSolution::iterate(){
     std::size_t rows = data.size()/nCols;
     std::vector<double> newData(data);
-    // Loop over all points, except boundaries
-    for (std::size_t i = 1; i < rows-1; i++){
-        for (std::size_t j = 1; j < nCols-1; j++){
-            newData[i*nCols+j] = 0.25 * (data[(i-1)*nCols+j] + data[(i+1)*nCols+j] + data[i*nCols+j-1] + data[i*nCols+j+1] + h*h*force[i*nCols+j]);
-            // In (i=0,j=0) the point is (x=0, y=0), in (i=1,j=0) the point is (x=h, y=0), etc.
-        }
-    }
-    // Compute the error between the current and the previous iteration
     double error = 0.0;
+    
+    // Loop over all points, except boundaries
+    #pragma omp parallel for shared(newData) reduction(+:error)
     for (std::size_t i = 1; i < rows-1; i++){
         for (std::size_t j = 1; j < nCols-1; j++){
+            // In (i=0,j=0) the point is (x=0, y=0), in (i=1,j=0) the point is (x=h, y=0), etc.
+            newData[i*nCols+j] = 0.25 * (data[(i-1)*nCols+j] + data[(i+1)*nCols+j] + data[i*nCols+j-1] + data[i*nCols+j+1] + h*h*force[i*nCols+j]);
+            // Compute the error between the current and the previous iteration
             error += (data[i*nCols+j] - newData[i*nCols+j])*(data[i*nCols+j] - newData[i*nCols+j]);
         }
     }

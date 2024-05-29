@@ -1,12 +1,11 @@
 #Insert the path to the folder with muparser and json libraries
-L_ROOT = ../../pacs-examples/Examples
+PACS_ROOT = ../../pacs-examples/Examples
 
 CXX       = mpic++
 CXXFLAGS ?= -std=c++20
-#CPPFLAGS ?= -fopenmp -O3 -Wall -pedantic -Wno-unused-variable
-CPPFLAGS ?= -O3 -Wall -pedantic -Iinclude -I${L_ROOT}/include
+CPPFLAGS ?= -fopenmp -O3 -Wall -pedantic -Iinclude -I${PACS_ROOT}/include
 
-LDFLAGS ?= -L${L_ROOT}/lib
+LDFLAGS ?= -L${PACS_ROOT}/lib
 LIBS  ?= -lmuparser
 
 DEPEND = make.dep

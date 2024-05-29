@@ -41,8 +41,9 @@ public:
 	std::vector<double> getData() const {return data;}
 	std::vector<double> getForce() const {return force;}
 
-
+	// Returns the number of iteration completed
 	std::size_t solve();
+	// Returns the error from the previous iteration
 	double iterate();
 
 	void print();

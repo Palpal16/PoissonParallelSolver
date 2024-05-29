@@ -27,7 +27,9 @@ int main(int argc, char** argv) {
         sequentialSolver(filename);
     }
 
-    parallelSolver(filename);
+    if(readIfMpiJson(filename)){
+        parallelSolver(filename);
+    }
 
     MPI_Finalize();
 

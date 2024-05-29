@@ -62,3 +62,11 @@ bool readIfSeqJson(const std::string & filename){
 	bool seq = data.value("solveSequential",true);
 	return seq;
 }
+
+bool readIfMpiJson(const std::string & filename){
+	std::ifstream f(filename);
+	json data = json::parse(f);
+
+	bool mpi = data.value("solveParallel",true);
+	return mpi;
+}
