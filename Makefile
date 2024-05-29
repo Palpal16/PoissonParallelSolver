@@ -3,8 +3,8 @@ L_ROOT = ../../pacs-examples/Examples
 
 CXX       = mpic++
 CXXFLAGS ?= -std=c++20
-#CPPFLAGS ?= -fopenmp -O3 -Wall -pedantic
-CPPFLAGS ?= -O3 -Wall -pedantic -Wno-unused-variable -I${L_ROOT}/include
+#CPPFLAGS ?= -fopenmp -O3 -Wall -pedantic -Wno-unused-variable
+CPPFLAGS ?= -O3 -Wall -pedantic -Iinclude -I${L_ROOT}/include
 
 LDFLAGS ?= -L${L_ROOT}/lib
 LIBS  ?= -lmuparser
@@ -12,15 +12,12 @@ LIBS  ?= -lmuparser
 DEPEND = make.dep
 
 EXEC = main 
-SRCS = $(wildcard *.cpp)
+SRCS = $(wildcard *.cpp) $(wildcard src/*.cpp)
 OBJS = $(SRCS:.cpp=.o)
 
 .PHONY = all $(EXEC) $(OBJS) clean distclean $(DEPEND)
 
 all: $(DEPEND) $(EXEC)
-
-#$(EXEC): %: %.cpp
-#	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $< $(LIBS) -o $@
 
 $(EXEC): $(OBJS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $^ $(LIBS) -o $@
