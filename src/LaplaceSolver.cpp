@@ -7,6 +7,7 @@
 #include "approxSolution.hpp"
 #include "utilities.hpp"
 #include "readJson.hpp"
+#include "writeVTK.hpp"
 
 
 double sequentialSolver(std::string filename, std::size_t N){
@@ -29,6 +30,7 @@ double sequentialSolver(std::string filename, std::size_t N){
         u.print();
     }
     std::cout << std::endl;
+
     return diff.count();
 }
 
@@ -149,6 +151,12 @@ double parallelSolver(std::string filename, std::size_t N){
         if(readIfPrintJson(filename)){
             std::cout << "\nParallel approximate solution: " << std::endl;
             u.print();
+        }
+
+        if(readIfVtkJson(filename)){
+            std::string vtkFile = readVtkNameJson(filename); 
+            std::cout << " ------------ Writing VTK file to " << vtkFile << " ------------ "<< std::endl;
+            generateVTKFile(vtkFile, data, GridDimensions);
         }
         return diff.count();
     }

@@ -17,5 +17,7 @@ bool readIfPrintJson(const std::string & filename);
 bool readIfSeqJson(const std::string & filename);
 bool readIfMpiJson(const std::string & filename);
 bool readIfPerformanceJson(const std::string & filename);
+bool readIfVtkJson(const std::string & filename);
+std::string readVtkNameJson(const std::string & filename);
 
 #endif // READJSON_HPP

@@ -12,9 +12,9 @@ void readDataJson(const std::string & filename, std::size_t &N, double &tol, std
 	json data = json::parse(f);
 
 	// Initializing parameters from JSON data
-	N = data.value("GridDimension",10);
-	tol = data.value("tolerance", 1e-7);
-    maxIter = data.value("maxIterations",100);
+	N = data.value("GridDimension",1);
+	tol = data.value("tolerance", 1e-3);
+    maxIter = data.value("maxIterations",10);
 
 	// Initializing forcing term
 	std::string forceString = data.value("forceFunction","");
@@ -22,8 +22,8 @@ void readDataJson(const std::string & filename, std::size_t &N, double &tol, std
 	force=Force;
 	
 	// Initializing boundary conditions
-	Dir = data.value("homogeneousDirichlet",1);
-	boundaryValue=data.value("boundaryValue",0.0);
+	Dir = data.value("homogeneousDirichlet",false);
+	boundaryValue=data.value("boundaryValue",1.0);
 	std::string boundaryFunctionString = data.value("boundaryFunction","");
 	MuparserFun BoundaryFunction(boundaryFunctionString, 2);
 	boundaryFunction=BoundaryFunction;
@@ -43,7 +43,7 @@ int readDimJson(const std::string & filename){
 	std::ifstream f(filename);
 	json data = json::parse(f);
 
-	int dim = data.value("GridDimension",10);
+	int dim = data.value("GridDimension",1);
 	return dim;
 }
 
@@ -51,7 +51,7 @@ bool readIfPrintJson(const std::string & filename){
 	std::ifstream f(filename);
 	json data = json::parse(f);
 
-	bool print = data.value("printSolution",true);
+	bool print = data.value("printSolution",false);
 	return print;
 }
 
@@ -59,7 +59,7 @@ bool readIfSeqJson(const std::string & filename){
 	std::ifstream f(filename);
 	json data = json::parse(f);
 
-	bool seq = data.value("solveSequential",true);
+	bool seq = data.value("solveSequential",false);
 	return seq;
 }
 
@@ -67,7 +67,7 @@ bool readIfMpiJson(const std::string & filename){
 	std::ifstream f(filename);
 	json data = json::parse(f);
 
-	bool mpi = data.value("solveParallel",true);
+	bool mpi = data.value("solveParallel",false);
 	return mpi;
 }
 
@@ -75,6 +75,22 @@ bool readIfPerformanceJson(const std::string & filename){
 	std::ifstream f(filename);
 	json data = json::parse(f);
 
-	bool scal = data.value("scalabilityTest",true);
-	return scal;
+	bool perf = data.value("performanceTest",false);
+	return perf;
+}
+
+bool readIfVtkJson(const std::string & filename){
+	std::ifstream f(filename);
+	json data = json::parse(f);
+
+	bool vtk = data.value("WriteVTK",false);
+	return vtk;
+}
+
+std::string readVtkNameJson(const std::string & filename){
+	std::ifstream f(filename);
+	json data = json::parse(f);
+
+	std::string vtkName = data.value("outputFile","output.vtk");
+	return vtkName;
 }

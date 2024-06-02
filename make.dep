@@ -22,7 +22,8 @@ LaplaceSolver.o: src/LaplaceSolver.cpp include/LaplaceSolver.hpp \
  ../../pacs-examples/Examples/include/muParserCallback.h \
  ../../pacs-examples/Examples/include/muParserBytecode.h \
  ../../pacs-examples/Examples/include/muParserTemplateMagic.h \
- include/utilities.hpp include/approxSolution.hpp include/readJson.hpp
+ include/utilities.hpp include/approxSolution.hpp include/readJson.hpp \
+ include/writeVTK.hpp
 approxSolution.o: src/approxSolution.cpp include/approxSolution.hpp \
  include/readJson.hpp include/muparser_fun.hpp \
  ../../pacs-examples/Examples/include/muParser.h \

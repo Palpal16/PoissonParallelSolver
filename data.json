@@ -1,7 +1,7 @@
 {
-    "GridDimension" : 16,
+    "GridDimension" : 150,
     "tolerance" : 1e-4,
-    "maxIterations" : 10000,
+    "maxIterations" : 20000,
     "forceFunction" : "8 * pi * pi * sin(2 * pi * x) * sin(2 * pi * y)",
     "exactSolution" : "sin(2 * pi * x) * sin(2 * pi * y)",
     "homogeneousDirichlet" : false,
@@ -9,6 +9,8 @@
     "boundaryFunction" : "0 * x * y",
     "printSolution" : false,
     "solveSequential" : false,
-    "solveParallel" : false,
-    "performanceTest" : true
+    "solveParallel" : true,
+    "performanceTest" : false,
+    "WriteVTK" : false,
+    "outputFile" : "mesh/output.vtk"
 }
