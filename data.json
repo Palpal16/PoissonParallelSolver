@@ -1,5 +1,5 @@
 {
-    "GridDimension" : 150,
+    "GridDimension" : 10,
     "tolerance" : 1e-4,
     "maxIterations" : 20000,
     "forceFunction" : "8 * pi * pi * sin(2 * pi * x) * sin(2 * pi * y)",
@@ -7,7 +7,7 @@
     "homogeneousDirichlet" : false,
     "boundaryValue" : 0.0,
     "boundaryFunction" : "0 * x * y",
-    "printSolution" : false,
+    "printSolution" : true,
     "solveSequential" : false,
     "solveParallel" : true,
     "performanceTest" : false,
