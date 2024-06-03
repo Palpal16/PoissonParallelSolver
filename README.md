@@ -17,7 +17,7 @@ This project is a C++ application that solves the Laplace equation using both se
 1. Clone the repository:
 
 ```
-git clone git@github.com:Palpal16/FirstChallengePacs.git
+git clone git@github.com:Palpal16/ThirdChallengePacs.git
 ```
 
 2. Modify the variable PACS_ROOT in the Makefile, to your repository with muparser library
@@ -54,14 +54,14 @@ Here is implemented the main class. The data is saved in a **vector of doubles**
 This header is needed to create the class able to read a string and make it into a muparser element. This will be called by the read methods.  
 
 - [Reader](src/readJson.cpp)  
-In here are defined the functions that interact with the input .json file, there are many different functions with basic interpretation and the main function readDataJson() is the one used directly in the constructor of approsSolution.  
+In here are defined the functions that interact with the **input .json file**, there are many different functions with basic interpretation and the main function **readDataJson()** is the one used directly in the constructor of approsSolution.  
 
 - [Solver](src/LaplaceSolver.cpp)  
 Here you can find three functions for the computation of the solution, all functions compute with chrono the execution time and print it.  
-sequentialSolver() simply constructs the approximate, calls the solve() and finally computes the error with the exact solution.  
-parallelSolver() is a bit more complex. The idea is to construct the initial data based on the input values, then split with a scatterv (to split as evenly as possible the data) into local approximations, follows the iteration method on all processors (with care on the sharing of the local boundary conditions) and finally a gatherv.  
-parallelPerformance() is used to analyze the compared performance between sequential and parallel execution as the grid size increases.  
+**sequentialSolver()** simply constructs the approximate, calls the solve() and finally computes the error with the exact solution.  
+**parallelSolver()** is a bit more complex. The idea is to construct the initial data based on the input values, then split with a scatterv (to split as evenly as possible the data) into local approximations, follows the iteration method on all processors (with care on the sharing of the local boundary conditions) and finally a gatherv.  
+**parallelPerformance()** is used to analyze the compared performance between sequential and parallel execution as the grid size increases.  
 The mesh size starts form the input "GridDimension" and at each iteration doubles. To avoid long and expensive tests I set the test to stop when it reaches a dimension of 300. If needed this can be changed inside the function source file.  
 
 - [Utilities](src/utilities.cpp) and [Output](include/writeVTK.hpp)  
-Here the functions are pretty obvious. Used for computing the error between an approxSolution element and a fucntion of doubles, printing a function given a grid size and writing the output in VTK format which is compatible with Paraview.
+Here the functions are pretty obvious. Used for computing the **error** between an approxSolution element and a fucntion of doubles, **printing** a function given a grid size and writing the **output** in VTK format which is compatible with Paraview.
