@@ -60,8 +60,10 @@ In here are defined the functions that interact with the **input .json file**, t
 Here you can find three functions for the computation of the solution, all functions compute with chrono the execution time and print it.  
 **sequentialSolver()** simply constructs the approximate, calls the solve() and finally computes the error with the exact solution.  
 **parallelSolver()** is a bit more complex. The idea is to construct the initial data based on the input values, then split with a scatterv (to split as evenly as possible the data) into local approximations, follows the iteration method on all processors (with care on the sharing of the local boundary conditions) and finally a gatherv.  
+Moreover, since this is the most efficient method, the call for the saving of the VTK file for Paraview is here, this is done if the flag in the .json file is true.  
 **parallelPerformance()** is used to analyze the compared performance between sequential and parallel execution as the grid size increases.  
 The mesh size starts form the input "GridDimension" and at each iteration doubles. To avoid long and expensive tests I set the test to stop when it reaches a dimension of 300. If needed this can be changed inside the function source file.  
 
 - [Utilities](src/utilities.cpp) and [Output](include/writeVTK.hpp)  
-Here the functions are pretty obvious. Used for computing the **error** between an approxSolution element and a fucntion of doubles, **printing** a function given a grid size and writing the **output** in VTK format which is compatible with Paraview.
+Here the functions are pretty obvious. Used for computing the **error** between an approxSolution element and a fucntion of doubles, **printing** a function given a grid size and writing the **output** in VTK format which is compatible with Paraview.  
+Even if is quite obvious, I want to precise that the printing functions, both in utilities.cpp and in approxSolution.cpp, are set to print only the first 4 rows and columns for big matrixes, this can be changed inside the functions.

@@ -80,21 +80,22 @@ double approxSolution::iterate(){
 }
 
 
-void approxSolution::print(){    
-    bool Max_print = nCols>4;
-    std::size_t cols= Max_print ? 4 : nCols; // To avoid printing too much
+void approxSolution::print(){  
+    std::size_t MaxRows= 4;  // Change here to print a different number of rows
+    bool MaxPrint = nCols>MaxRows;
+    std::size_t cols= MaxPrint ? MaxRows : nCols; // To avoid printing too much
     std::size_t rows = data.size()/nCols; // The matrix might not be a square during parallel execution
-    bool Max_print_rows= rows>4;
-    rows= (Max_print_rows) ? 4 : rows;
+    bool MaxPrint_rows= rows>MaxRows;
+    rows= (MaxPrint_rows) ? MaxRows : rows;
     for (std::size_t i = 0; i < rows; i++){
         for (std::size_t j = 0; j < cols; j++){
             std::cout << data[i*nCols+j] << " ";
         }
-        if (Max_print)
+        if (MaxPrint)
             std::cout << "...";
         std::cout << std::endl;
     }
-    if (Max_print_rows){
+    if (MaxPrint_rows){
         for (std::size_t i = 0; i < cols; i++){
             std::cout << " ⁝     ";
         }

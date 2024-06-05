@@ -13,18 +13,20 @@ double seqL2_error(std::function<double(double, double)> &u_ex, approxSolution& 
 }
 
 void printExact(std::function<double(double, double)> &u_ex, std::size_t N){
+	// This function is compatible only with square grids
 	double h=1.0/(N-1);
-    bool Max_print = N>4;
-	std::size_t n= Max_print ? 4 : N; // To avoid printing too much
+	std::size_t MaxRows = 4;  // Change here to print a different number of rows
+    bool MaxPrint = N>MaxRows;
+	std::size_t n= MaxPrint ? MaxRows : N; // To avoid printing too much
 	for (std::size_t i = 0; i < n; i++){
 		for (std::size_t j = 0; j < n; j++){
 			std::cout << u_ex(h*i, h*j) << " ";
 		}
-        if (Max_print)
+        if (MaxPrint)
             std::cout << "...";
 		std::cout << std::endl;
 	}
-	if (Max_print){
+	if (MaxPrint){
 		for (std::size_t i = 0; i < n; i++){
 			std::cout << " ⁝     ";
 		}

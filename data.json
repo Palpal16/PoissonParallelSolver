@@ -1,6 +1,6 @@
 {
-    "GridDimension" : 10,
-    "tolerance" : 1e-4,
+    "GridDimension" : 16,
+    "tolerance" : 1e-5,
     "maxIterations" : 20000,
     "forceFunction" : "8 * pi * pi * sin(2 * pi * x) * sin(2 * pi * y)",
     "exactSolution" : "sin(2 * pi * x) * sin(2 * pi * y)",
