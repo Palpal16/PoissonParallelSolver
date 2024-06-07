@@ -8,6 +8,10 @@ CPPFLAGS ?= -fopenmp -O3 -Wall -pedantic -Iinclude -I${PACS_ROOT}/include
 LDFLAGS ?= -L${PACS_ROOT}/lib
 LIBS  ?= -lmuparser
 
+ifdef SCALABILITY_TEST
+    CXXFLAGS += -DSCALABILITY_TEST
+endif
+
 DEPEND = make.dep
 
 EXEC = main 

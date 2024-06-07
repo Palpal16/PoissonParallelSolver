@@ -81,7 +81,7 @@ double approxSolution::iterate(){
 
 
 void approxSolution::print(){  
-    std::size_t MaxRows= 4;  // Change here to print a different number of rows
+    std::size_t MaxRows= 15;  // Change here to print a different number of rows
     bool MaxPrint = nCols>MaxRows;
     std::size_t cols= MaxPrint ? MaxRows : nCols; // To avoid printing too much
     std::size_t rows = data.size()/nCols; // The matrix might not be a square during parallel execution

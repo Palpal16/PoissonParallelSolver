@@ -10,6 +10,7 @@ This project is a C++ application that solves the Laplace equation using both se
 - Input parameters are read from a JSON file for flexibility and ease of use.  
 - Provides options for Dirichlet boundary conditions, both homogeneous and non-homogenous.  
 - Possibility to save the solution in a .vtk file, that can be opened from Paraview.  
+- Performance test through a .sh file over a changing number of cores  
 
 
 ## Usage
@@ -22,7 +23,7 @@ git clone git@github.com:Palpal16/ThirdChallengePacs.git
 
 2. Modify the variable PACS_ROOT in the Makefile, to your repository with muparser library
 
-3. Modify the file data.json with parameters of your choice. The names should be self-explanatory to the parameters meaning.  
+3. Modify the file input/data.json with parameters of your choice. The names should be self-explanatory to the parameters meaning.  
 
 4. Compile and run the program
 
@@ -39,13 +40,18 @@ Where the number after -np is the number of processors used in the MPI process.
 
 6. To open and view the solution on Paraview 
 ```
-paraview mesh/myMesh.vtk
+paraview output/myMesh.vtk
+```
+
+7. To analyze the performance with different number of cores
+```
+./scalability.sh
 ```
 
 
 ## Directory Structure and Code Explanation
-[include/](/include/) and [src/](src/) contain rispectively all the header and source files for the project.  
-[mesh/](mesh/): Contains the VTK files for the output of the mesh.  
+- [include/](include/) and [src/](src/) contain rispectively all the header and source files for the project.  
+- [output/](output/): Contains the VTK files for the output of the mesh and the performace file .txt that compares the execution time with different grid sizes and number of cores.  
 
 - [ApproxSolution](src/approxSolution.cpp)  
 Here is implemented the main class. The data is saved in a **vector of doubles**, instead the main functions are **iterate**, which does an iteration of the Jacobi method, and **solve**, that calles iterate sequentially until convergence. Inside iterate, where the main computations are computed, is applied a **omp parallel for** which is able to cut in half the execution time (for my hardware).  
@@ -67,3 +73,7 @@ The mesh size starts form the input "GridDimension" and at each iteration double
 - [Utilities](src/utilities.cpp) and [Output](include/writeVTK.hpp)  
 Here the functions are pretty obvious. Used for computing the **error** between an approxSolution element and a fucntion of doubles, **printing** a function given a grid size and writing the **output** in VTK format which is compatible with Paraview.  
 Even if is quite obvious, I want to precise that the printing functions, both in utilities.cpp and in approxSolution.cpp, are set to print only the first 4 rows and columns for big matrixes, this can be changed inside the functions.
+
+- [Scalability]
+++++
+++++

@@ -170,7 +170,7 @@ std::vector<std::vector<double>> parallelPerformance(std::string filename, std::
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
-    int MaxGridSize = 300;
+    int MaxGridSize = 50;
     bool finished=false;
     std::vector<std::vector<double>> Times(2, std::vector<double>());
     

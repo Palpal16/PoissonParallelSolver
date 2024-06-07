@@ -14,7 +14,34 @@ int main(int argc, char** argv) {
     int rank;
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-    std::string filename = "data.json";
+    std::string filename = "input/data.json";
+
+// This part is run only for the scalability test
+#ifdef SCALABILITY_TEST
+
+    std::vector<int> gridSizes;
+    
+    // Sace the pointer to stdout
+    std::streambuf* coutbuf = std::cout.rdbuf();
+
+    // Redirect stdout to /dev/null
+    // This way the output of the parallelPerformance() function is not printed
+    std::ostringstream ostr;
+    std::cout.rdbuf(ostr.rdbuf());
+
+    std::vector<std::vector<double>> times = parallelPerformance(filename, gridSizes);
+
+    // Redirect stdout back to the original
+    std::cout.rdbuf(coutbuf);
+
+    if(rank==0){
+        std::cout << "Grid size, Seq time, Par time" << std::endl;
+        for(std::size_t i=0; i<gridSizes.size(); i++){
+            std::cout << gridSizes[i] << ", " << times[0][i] << ", " << times[1][i] << std::endl;
+        }
+    }
+
+#else
 
     if(rank==0 && readIfPrintJson(filename)){
         std::function<double(double, double)> u_ex = readExactJson(filename);
@@ -43,6 +70,8 @@ int main(int argc, char** argv) {
             }
         }
     }
+
+#endif
 
     MPI_Finalize();
 
