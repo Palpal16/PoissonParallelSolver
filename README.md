@@ -50,8 +50,8 @@ paraview output/myMesh.vtk
 
 
 ## Directory Structure and Code Explanation
-- [include/](include/) and [src/](src/) contain rispectively all the header and source files for the project.  
-- [output/](output/): Contains the VTK files for the output of the mesh and the performace file .txt that compares the execution time with different grid sizes and number of cores.  
+- [include](include/) and [src](src/) contain respectively all the header and source files for the project.  
+- [input](input/) and [output](output/) contain respectively the data.json file for the user interaction and output files, which are the VTK files for the mesh and the performace file .txt that compares the execution time with different grid sizes and number of cores.  
 
 - [ApproxSolution](src/approxSolution.cpp)  
 Here is implemented the main class. The data is saved in a **vector of doubles**, instead the main functions are **iterate**, which does an iteration of the Jacobi method, and **solve**, that calles iterate sequentially until convergence. Inside iterate, where the main computations are computed, is applied a **omp parallel for** which is able to cut in half the execution time (for my hardware).  
@@ -74,7 +74,7 @@ The mesh size starts form the input "GridDimension" and at each iteration double
 Here the functions are pretty obvious. Used for computing the **error** between an approxSolution element and a fucntion of doubles, **printing** a function given a grid size and writing the **output** in VTK format which is compatible with Paraview.  
 Even if is quite obvious, I want to precise that the printing functions, both in utilities.cpp and in approxSolution.cpp, are set to print only the first 4 rows and columns for big matrixes, this can be changed inside the functions.  
 
-- [Scalability](scalability.sh)
+- [Scalability](scalability.sh)  
 To test the **scalability** on your computer, you can run ./scalability.sh this will compile only the part of the main flagged by the environmental variable SCALABILITY_TEST which runs the performance test and saves in scalabilityResult.txt the sequential and parallel execution time of the program on the number of processors given.  
 In the file myScalabilityResults.txt you can find the results obtained with my computer. I am using a docker container with 8 CPUs.  
 To modify the number of processors, simply change the varibale "processors" in the .sh file.  
