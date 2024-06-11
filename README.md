@@ -72,8 +72,10 @@ The mesh size starts form the input "GridDimension" and at each iteration double
 
 - [Utilities](src/utilities.cpp) and [Output](include/writeVTK.hpp)  
 Here the functions are pretty obvious. Used for computing the **error** between an approxSolution element and a fucntion of doubles, **printing** a function given a grid size and writing the **output** in VTK format which is compatible with Paraview.  
-Even if is quite obvious, I want to precise that the printing functions, both in utilities.cpp and in approxSolution.cpp, are set to print only the first 4 rows and columns for big matrixes, this can be changed inside the functions.
+Even if is quite obvious, I want to precise that the printing functions, both in utilities.cpp and in approxSolution.cpp, are set to print only the first 4 rows and columns for big matrixes, this can be changed inside the functions.  
 
-- [Scalability]
-++++
-++++
+- [Scalability](scalability.sh)
+To test the **scalability** on your computer, you can run ./scalability.sh this will compile only the part of the main flagged by the environmental variable SCALABILITY_TEST which runs the performance test and saves in scalabilityResult.txt the sequential and parallel execution time of the program on the number of processors given.  
+In the file myScalabilityResults.txt you can find the results obtained with my computer. I am using a docker container with 8 CPUs.  
+To modify the number of processors, simply change the varibale "processors" in the .sh file.  
+Remeber that after compiling the code with the scalability flag, for the other part of the code to be compiled it's necessary to run **make clan** before the **make** or equivalently **make -B**. This way the part of the code outside the ifdef is compiled.

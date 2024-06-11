@@ -11,7 +11,7 @@ make clean
 make SCALABILITY_TEST=0
 
 # Define the number of processors and grid sizes for testing
-processor_counts=(1 2 4 8)
+processors=(1 2 4 8)
 
 # Output file for results
 output_file="output/scalabilityResults.txt"
@@ -25,9 +25,10 @@ echo "*******************************" >> $output_file
 echo "" >> $output_file
 
 # Run the tests and capture the output
-for np in "${processor_counts[@]}"; do  
+for np in "${processors[@]}"; do  
         echo "Running test with ${np} processors"
         echo "-------------------------------------" >> $output_file
+        echo "------------ ${np} processors ------------" >> $output_file
         mpirun -np ${np} ./main >> $output_file
         echo "" >> $output_file
 done
