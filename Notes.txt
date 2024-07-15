@@ -1,7 +1,5 @@
 - The code is very slow when solving in parallel with more then 2 processors. Expensive communication.
 
-- you can write only one solver (parallel) and adapt it to the case of only one processor
-- the computational time for the sequential solver should be the same with every number of processors, since it works only on one.
 - scalability test gets stuck with more than 4 processes.
 
 - no openmp
