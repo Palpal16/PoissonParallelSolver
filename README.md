@@ -1,4 +1,4 @@
-# ThirdChallengePacs
+# PoissonParallelSolver
 
 ## Laplace equation solution in C++ with MPI and OMP
 
@@ -18,7 +18,7 @@ This project is a C++ application that solves the Laplace equation using both se
 1. Clone the repository:
 
 ```
-git clone git@github.com:Palpal16/ThirdChallengePacs.git
+git clone git@github.com:Palpal16/PoissonParallelSolver.git
 ```
 
 2. Modify the variable PACS_ROOT in the Makefile, to your repository with muparser library
